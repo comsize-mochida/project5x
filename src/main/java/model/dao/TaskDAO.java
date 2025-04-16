@@ -7,10 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.entity.CategoryBean;
 import model.entity.StatusBean;
 
 public class TaskDAO {
 
+	//ステータスマスタのステータスコードとステータス名をリストで取ってくるメソッド
 	public List<StatusBean> selectStatus() throws ClassNotFoundException, SQLException {
 
 		String sql = "SELECT status_code,status_name FROM m_status";
@@ -38,13 +40,14 @@ public class TaskDAO {
 
 	}
   
+	//カテゴリマスタのカテゴリIDとカテゴリ名をリストで取ってくるメソッド
 	public List<CategoryBean> selectCategory() throws SQLException, ClassNotFoundException {
 		
 		String sql = "SELECT category_id, category_name FROM m_category";
 		
 		try(Connection con = ConnectionManager.getConnection();
-				Statement stmt = con.createStatement();
-				ResultSet res = stmt.executeQuery(sql)){
+				PreparedStatement stmt = con.prepareStatement(sql);
+				ResultSet res = stmt.executeQuery()){
 			
 			List<CategoryBean> list = new ArrayList<>();
 			while(res.next()) {
@@ -55,6 +58,6 @@ public class TaskDAO {
 			}
 			return list;
 		}
-	
+	}
 
 }
