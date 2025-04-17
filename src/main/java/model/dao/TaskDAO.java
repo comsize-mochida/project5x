@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.entity.CategoryBean;
 import model.entity.StatusBean;
+import model.entity.TaskBean;
 
 public class TaskDAO {
 
@@ -58,6 +61,33 @@ public class TaskDAO {
 			}
 			return list;
 		}
+	}
+	
+	public List<TaskBean> selectAll() throws SQLException, ClassNotFoundException{
+		List<TaskBean> list = new ArrayList<>();
+		String sql = "SELECT t1.task_name,t2.category_name,t1.limit_date,t3.user_name,t4.status_name,t1.memo "
+				+ "FROM t_task t1 inner join m_category t2 on t1.category_id = t2.category_id "
+				+ "inner join m_user t3 on t1.user_id = t3.user_id inner join m_status t4 on t1.status_code = t4.status_code";
+		
+		try(Connection con = ConnectionManager.getConnection();
+				PreparedStatement stmt = con.prepareStatement(sql);
+				ResultSet res = stmt.executeQuery()){
+			
+			while(res.next()) {
+				TaskBean bean = new TaskBean();
+				bean.setTaskName(res.getString("task_name"));
+				bean.setCategoryName(res.getString("category_name"));
+				bean.setLimitDate(LocalDate.ofInstant(res.getDate("limit_date").toInstant(), ZoneId.systemDefault()));
+				bean.setUserName(res.getString("user_name"));
+				bean.setStatusName(res.getString("status_name"));
+				bean.setMemo(res.getString("memo"));
+				
+				list.add(bean);
+			}
+		
+		return list;
+		
+	}
 	}
 
 }
