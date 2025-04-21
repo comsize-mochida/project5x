@@ -102,7 +102,11 @@ public class TaskDAO {
 					bean.setTaskID(res.getInt("task_id"));
 					bean.setTaskName(res.getString("task_name"));
 					bean.setCategoryName(res.getString("category_name"));
-					bean.setLimitDate(res.getDate("limit_date").toLocalDate());
+					if(res.getDate("limit_date") != null) {
+						bean.setLimitDate(res.getDate("limit_date").toLocalDate());
+					}else {
+						bean.setLimitDate(null);
+					}
 					bean.setUserName(res.getString("user_name"));
 					bean.setStatusName(res.getString("status_name"));
 					bean.setMemo(res.getString("memo"));
@@ -146,7 +150,11 @@ public class TaskDAO {
 
 			pstmt.setString(1, bean.getTaskName());
 			pstmt.setInt(2, bean.getCategoryID());
-			pstmt.setDate(3, java.sql.Date.valueOf(bean.getLimitDate()));
+			if(bean.getLimitDate() != null) {
+				pstmt.setDate(3, java.sql.Date.valueOf(bean.getLimitDate()));
+			}else {
+				pstmt.setString(3, null);
+			}
 			pstmt.setString(4, bean.getUserID());
 			pstmt.setString(5, bean.getStatusCode());
 			pstmt.setString(6, bean.getMemo());
