@@ -64,10 +64,11 @@ public class TaskDAO {
 
 	//カテゴリマスタのカテゴリIDとカテゴリ名をリストで取ってくるメソッド
 	public List<CategoryBean> selectCategory() throws SQLException, ClassNotFoundException {
+		
+		String sql = "SELECT category_id, category_name FROM m_category ORDER BY category_id";
+		
+		try(Connection con = ConnectionManager.getConnection();
 
-		String sql = "SELECT category_id, category_name FROM m_category";
-
-		try (Connection con = ConnectionManager.getConnection();
 				PreparedStatement stmt = con.prepareStatement(sql);
 				ResultSet res = stmt.executeQuery()) {
 
@@ -131,7 +132,9 @@ public class TaskDAO {
 		
 		return count;
 		
+
 	}
+
 
 	public int register(TaskBean bean) throws ClassNotFoundException, SQLException {
 
@@ -152,6 +155,72 @@ public class TaskDAO {
 		}
 
 		return count;
+
+	}
+	
+	//タスクテーブルを編集するメソッド
+	public int update(TaskBean bean) throws SQLException, ClassNotFoundException {
+		
+		String sql = "UPDATE t_task SET task_name = ?, category_id = ?, limit_date = ?, user_id = ?, status_code = ?, memo = ? WHERE task_id = ?";
+		
+		try(Connection con = ConnectionManager.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			
+			pstmt.setString(1, bean.getTaskName());
+			pstmt.setInt(2, bean.getCategoryID());
+			if(bean.getLimitDate()!=null) {
+				pstmt.setDate(3, java.sql.Date.valueOf(bean.getLimitDate()));
+			}else {
+				pstmt.setDate(3, null);
+			}
+			pstmt.setString(4, bean.getUserID());
+			pstmt.setString(5, bean.getStatusCode());
+			pstmt.setString(6, bean.getMemo());
+			pstmt.setInt(7, bean.getTaskID());
+			
+			int count = pstmt.executeUpdate();
+			
+			return count;
+		}
+	}
+	
+	//タスクIDに対応するタスク情報を取ってくるメソッド
+	public TaskBean selectTask(int taskID) throws SQLException, ClassNotFoundException{
+		
+		String sql = "SELECT t1.task_id, t1.task_name, t1.category_id, t2.category_name, t1.limit_date, t1.user_id, t3.user_name, t1.status_code, t4.status_name, t1.memo "
+				+ "FROM t_task t1 inner join m_category t2 on t1.category_id = t2.category_id "
+				+ "inner join m_user t3 on t1.user_id = t3.user_id "
+				+ "inner join m_status t4 on t1.status_code = t4.status_code "
+				+ "WHERE task_id = ?";
+		
+		try(Connection con = ConnectionManager.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			
+			pstmt.setInt(1, taskID);
+			ResultSet res = pstmt.executeQuery();
+			
+			TaskBean bean = new TaskBean();
+			if(res.next()) {
+				bean.setTaskID(res.getInt("task_id"));
+				bean.setTaskName(res.getString("task_name"));
+				bean.setCategoryID(res.getInt("category_id"));
+				bean.setCategoryName(res.getString("category_name"));
+				if(res.getDate("limit_date") != null) {
+					bean.setLimitDate(res.getDate("limit_date").toLocalDate());
+				}else {
+					bean.setLimitDate(null);
+				}
+				bean.setUserID(res.getString("user_id"));
+				bean.setUserName(res.getString("user_name"));
+				bean.setStatusCode(res.getString("status_code"));
+				bean.setStatusName(res.getString("status_name"));
+				bean.setMemo(res.getString("memo"));
+			}
+			
+			return bean;
+		}
+		
+	}
 
 	}
 }
