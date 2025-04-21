@@ -13,14 +13,13 @@ public class UserDAO {
 
 	public List<UserBean> selectUser() throws SQLException, ClassNotFoundException {
 		
-		String sql = "SELECT user_id,user_name FROM m_user";
+		String sql = "SELECT user_id,user_name FROM m_user ORDER BY user_name";
 		List<UserBean> list = new ArrayList<UserBean>();
 		
 		try (Connection con = ConnectionManager.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
-
-			ResultSet res = pstmt.executeQuery();
-
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet res = pstmt.executeQuery()) {
+			
 			while (res.next()) {
 
 				UserBean bean = new UserBean();
@@ -29,11 +28,8 @@ public class UserDAO {
 				bean.setUserName(res.getString("user_name"));
 
 				list.add(bean);
-
 			}
-
 		}
-
 		return list;
 		
 	}
