@@ -97,18 +97,18 @@ public class TaskDAO {
 			
 			
 			try(ResultSet res = stmt.executeQuery()){
-			while (res.next()) {
-				TaskBean bean = new TaskBean();
-				bean.setTaskID(res.getInt("task_id"));
-				bean.setTaskName(res.getString("task_name"));
-				bean.setCategoryName(res.getString("category_name"));
-				bean.setLimitDate(res.getDate("limit_date").toLocalDate());
-				bean.setUserName(res.getString("user_name"));
-				bean.setStatusName(res.getString("status_name"));
-				bean.setMemo(res.getString("memo"));
-
-				list.add(bean);
-			}
+				while (res.next()) {
+					TaskBean bean = new TaskBean();
+					bean.setTaskID(res.getInt("task_id"));
+					bean.setTaskName(res.getString("task_name"));
+					bean.setCategoryName(res.getString("category_name"));
+					bean.setLimitDate(res.getDate("limit_date").toLocalDate());
+					bean.setUserName(res.getString("user_name"));
+					bean.setStatusName(res.getString("status_name"));
+					bean.setMemo(res.getString("memo"));
+	
+					list.add(bean);
+				}
 			}
 			return list;
 
@@ -222,5 +222,4 @@ public class TaskDAO {
 		
 	}
 
-	}
 }
