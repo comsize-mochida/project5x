@@ -15,8 +15,8 @@
 	int currentPage = (Integer) request.getAttribute("currentPage");
 	int totalPages = (Integer) request.getAttribute("totalPages");
 	%>
-	<form action="delete-comfirm.servlet" method="POST">
-		<table border="1">
+	<form action="delete-comfirm-servlet" method="POST">
+		<table border="double">
 			<tr>
 				<th>削除</th>
 				<th>タスク名</th>
@@ -42,7 +42,7 @@
 				<td>
 					<%
 					if (session.getAttribute("userName").equals(Category.getUserName())) {
-					%> <a href="update-form-servlet?taskID=<%=Category.getTaskID()%>"><%=Category.getTaskName()%></a>
+					%> <a href="update-servlet?taskID=<%=Category.getTaskID()%>"><%=Category.getTaskName()%></a>
 					<%
 					} else {
 					%> <%=Category.getTaskName()%> <%

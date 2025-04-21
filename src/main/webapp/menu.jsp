@@ -12,7 +12,7 @@
 	<h1>メニュー画面</h1>
 
 
-	<form action="register-form.jsp" method="POST">
+	<form action="register-confirm-servlet" method="GET">
 		<input type="submit" value="登録画面へ">
 	</form>
 
