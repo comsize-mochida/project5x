@@ -13,24 +13,20 @@ import model.entity.TaskBean;
 
 public class TaskDAO {
 
-	public int delete(TaskBean taskBean) throws SQLException, ClassNotFoundException {
-
-		String sql = "DELETE FROM m_user WHERE task_id = ?";
-
+public int delete(int taskID) throws SQLException, ClassNotFoundException {
+		
+		String sql = "DELETE FROM t_task WHERE task_id = ?";
 		int result = 0;
 		//必ずPreparedStatement型で書くよ！
 		try (Connection con = ConnectionManager.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
-
 			//ここではプレースホルダに値をセットする！
-			//DeleteConfirmServlet.javaで記述した、
+			//DeleteServlet.javaで記述した、
 			//int delete = taskDAO.delete(taskBean);で受け取った引数を
 			//pstmtにセットする！
-			pstmt.setInt(1, taskBean.getTaskID());
+			pstmt.setInt(1, taskID);
 			result = pstmt.executeUpdate();
-
 		}
-
 		return result;
 	}
 
@@ -83,20 +79,17 @@ public class TaskDAO {
 		}
 	}
 
-	public List<TaskBean> selectAll(int offset,int limit) throws SQLException, ClassNotFoundException {
+	public List<TaskBean> selectAll() throws SQLException, ClassNotFoundException {
 		List<TaskBean> list = new ArrayList<>();
 		String sql = "SELECT t1.task_id,t1.task_name,t2.category_name,t1.limit_date,t3.user_name,t4.status_name,t1.memo "
 				+ "FROM t_task t1 inner join m_category t2 on t1.category_id = t2.category_id "
-				+ "inner join m_user t3 on t1.user_id = t3.user_id inner join m_status t4 on t1.status_code = t4.status_code limit ? offset ?";
+				+ "inner join m_user t3 on t1.user_id = t3.user_id inner join m_status t4 on t1.status_code = t4.status_code";
 
 		try (Connection con = ConnectionManager.getConnection();
 				PreparedStatement stmt = con.prepareStatement(sql);
-				) {
-			stmt.setInt(1, limit);
-            stmt.setInt(2, offset);
+				ResultSet res = stmt.executeQuery()) {
 			
 			
-			try(ResultSet res = stmt.executeQuery()){
 				while (res.next()) {
 					TaskBean bean = new TaskBean();
 					bean.setTaskID(res.getInt("task_id"));
@@ -113,31 +106,12 @@ public class TaskDAO {
 	
 					list.add(bean);
 				}
-			}
+			
 			return list;
 
 		}
 	}
 	
-	public int countAll() throws SQLException, ClassNotFoundException {
-		int count = 0;
-		String sql = "SELECT t1.task_id,t1.task_name,t2.category_name,t1.limit_date,t3.user_name,t4.status_name,t1.memo "
-				+ "FROM t_task t1 inner join m_category t2 on t1.category_id = t2.category_id "
-				+ "inner join m_user t3 on t1.user_id = t3.user_id inner join m_status t4 on t1.status_code = t4.status_code";
-		
-		try (Connection con = ConnectionManager.getConnection();
-				PreparedStatement stmt = con.prepareStatement(sql);
-				ResultSet res = stmt.executeQuery()) {
-			
-			if (res.next()) {
-                count = res.getInt(1);
-            }
-		}
-		
-		return count;
-		
-
-	}
 
 
 	public int register(TaskBean bean) throws ClassNotFoundException, SQLException {
