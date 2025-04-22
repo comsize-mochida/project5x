@@ -49,41 +49,49 @@ public class DeleteConfirmServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		
-		//		タスク一覧から削除確認画面へ遷移するために使用するサーブレット
-		try {
-			// チェックされた taskID を取得（複数選択対応）
-			String[] deleteIdCount = request.getParameterValues("taskID");
+		//タスク一覧から削除確認画面へ遷移するために使用するサーブレット
+		
+		// チェックされた taskID を取得（複数選択対応）
+		String[] deleteIdCount = request.getParameterValues("taskID");
+		if(deleteIdCount == null) {
 			
-			// 選択された taskID に対応する TaskBean のリストを作成
-			List<TaskBean> deleteTasks = new ArrayList<>();
-            TaskDAO dao = new TaskDAO();
-            
-            if (deleteIdCount != null) {
-            	List<Integer> taskIdList = new ArrayList<>();
-                for (String idStr : deleteIdCount) {
-                    int taskId = Integer.parseInt(idStr);
-                    taskIdList.add(taskId);
-        			session.setAttribute("taskIdList", taskIdList);
-
-                    TaskBean task = dao.selectTask(taskId);
-                    if (task != null) {
-                        deleteTasks.add(task);
-                    }
-                }
-            }
-            
-            // JSP に渡すため、リクエストスコープにセット
-			session.setAttribute("deleteTasks", deleteTasks);
-			// 削除確認画面へフォワード
-			RequestDispatcher rd = request.getRequestDispatcher("delete-confirm.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("task-list-servlet");
 			rd.forward(request, response);
-
-		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			
+		}else {
+		
+			try {
+				// 選択された taskID に対応する TaskBean のリストを作成
+				List<TaskBean> deleteTasks = new ArrayList<>();
+	            TaskDAO dao = new TaskDAO();
+	            
+	            if (deleteIdCount != null) {
+	            	List<Integer> taskIdList = new ArrayList<>();
+	                for (String idStr : deleteIdCount) {
+	                    int taskId = Integer.parseInt(idStr);
+	                    taskIdList.add(taskId);
+	        			session.setAttribute("taskIdList", taskIdList);
+	
+	                    TaskBean task = dao.selectTask(taskId);
+	                    if (task != null) {
+	                        deleteTasks.add(task);
+	                    }
+	                }
+	            }
+	            
+	            // JSP に渡すため、リクエストスコープにセット
+				session.setAttribute("deleteTasks", deleteTasks);
+				// 削除確認画面へフォワード
+				RequestDispatcher rd = request.getRequestDispatcher("delete-confirm.jsp");
+				rd.forward(request, response);
+	
+			} catch (ClassNotFoundException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
 		}
 	}
 }
