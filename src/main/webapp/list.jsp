@@ -12,10 +12,8 @@
 
 	<%
 	List<TaskBean> TaskBeanList = (List) request.getAttribute("list");
-	int currentPage = (Integer) request.getAttribute("currentPage");
-	int totalPages = (Integer) request.getAttribute("totalPages");
 	%>
-	<form action="delete-comfirm-servlet" method="POST">
+	<form action="delete-confirm-servlet" method="POST">
 		<table border="double">
 			<tr>
 				<th>削除</th>
@@ -25,6 +23,7 @@
 				<th>担当者情報</th>
 				<th>ステータス情報</th>
 				<th>メモ</th>
+				<th>コメント</th>
 
 			</tr>
 			<%
@@ -76,46 +75,17 @@
  }
  %>
 				</td>
+				
+				<td>
+				
+				<input type="button" value="コメント" onclick="location.href='comment-servlet?taskID=<%=Category.getTaskID()%>&taskName=<%=Category.getTaskName()%>'">
+				
+				</td>
 			</tr>
 			<%
 			}
 			%>
-			<!-- ページネーション -->
-			<div class="pagination">
-				<%
-				if (currentPage > 1) {
-				%>
-				<a href="?page=<%=currentPage - 1%>">前へ</a>
-				<%
-				}
-				%>
-
-				<%
-				for (int i = 1; i <= totalPages; i++) {
-				%>
-				<%
-				if (i == currentPage) {
-				%>
-				<strong><%=i%></strong>
-				<%
-				} else {
-				%>
-				<a href="?page=<%=i%>"><%=i%></a>
-				<%
-				}
-				%>
-				<%
-				}
-				%>
-
-				<%
-				if (currentPage < totalPages) {
-				%>
-				<a href="?page=<%=currentPage + 1%>">次へ</a>
-				<%
-				}
-				%>
-			</div>
+			
 		</table>
 		<br> <input type="submit" value="削除">
 	</form>
