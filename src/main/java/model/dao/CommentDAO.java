@@ -42,4 +42,22 @@ public class CommentDAO {
 		}
 	}
 	
+	public int register(CommentBean bean) throws SQLException, ClassNotFoundException {
+		
+		String sql = "INSERT INTO t_comment (task_id, user_id, comment) VALUES (?, ?, ?)";
+		
+		try (Connection con = ConnectionManager.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			
+			pstmt.setInt(1, bean.getTaskID());
+			pstmt.setString(2, bean.getUserID());
+			pstmt.setString(3, bean.getComment());
+			
+			int count = pstmt.executeUpdate();
+			
+			return count;
+		}
+		
+	}
+	
 }
