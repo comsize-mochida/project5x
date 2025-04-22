@@ -12,7 +12,7 @@
 	
 	<br>
 
-	<form action="list.jsp" method="POST">
+	<form action="task-list-servlet" method="GET">
 		<input type="submit" value="一覧に戻る">
 	</form>
 	<br>

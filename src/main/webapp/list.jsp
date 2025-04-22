@@ -33,7 +33,7 @@
 				<td>
 					<%
 					if (session.getAttribute("userName").equals(Category.getUserName())) {
-					%><input type="checkbox" name="taskID" value="<%=Category.getTaskID()%>" required>
+					%><input type="checkbox" name="taskID" value="<%=Category.getTaskID()%>">
 					<%
 					}
 					%>
@@ -95,7 +95,7 @@
 					if (session.getAttribute("userName").equals(Category.getUserName())) {
 					%><input type="submit" value="削除" >
 					<%
-					}
+					break;}
 					%>
 					<%
 			}

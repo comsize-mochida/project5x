@@ -39,7 +39,11 @@
 		</tr>
 		<tr>
 			<th>期限:</th>
-			<td><%= task.getLimitDate() %></td>
+			<td>
+			<% if(task.getLimitDate()!=null){ %>
+			<%= task.getLimitDate() %>
+			<% } %>
+			</td>
 		</tr>
 		<tr>
 			<th>担当者情報:</th>
@@ -60,10 +64,6 @@
     }
 	%>
 	
-	<br>
-	<form action="list.jsp" method="POST">
-		<input type="button" onclick="history.back()" value="一覧に戻る">
-	</form>
 
 	<!-- 一括削除フォーム -->
 	<form action="delete-servlet" method="POST">
@@ -79,8 +79,12 @@
 		<input type="submit" value="削除">	
 	</form>
 	<br>
+	<form action="list.jsp" method="POST">
+		<input type="button" onclick="history.back()" value="一覧に戻る">
+	</form>
+	<br>
 	<%@ include file="footer.jsp"%>
 	
-	 
+	
 </body>
 </html>
