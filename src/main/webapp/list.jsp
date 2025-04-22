@@ -33,7 +33,7 @@
 				<td>
 					<%
 					if (session.getAttribute("userName").equals(Category.getUserName())) {
-					%><input type="checkbox" name="taskID" value="<%=Category.getTaskID()%>">
+					%><input type="checkbox" name="taskID" value="<%=Category.getTaskID()%>" required>
 					<%
 					}
 					%>
@@ -87,7 +87,19 @@
 			%>
 			
 		</table>
-		<br> <input type="submit" value="削除">
+		
+		<br> 
+		<%
+			for (TaskBean Category : TaskBeanList) {
+			%><%
+					if (session.getAttribute("userName").equals(Category.getUserName())) {
+					%><input type="submit" value="削除" >
+					<%
+					}
+					%>
+					<%
+			}
+			%>
 	</form>
 	<br>
 	<form action="menu.jsp" method="POST">
