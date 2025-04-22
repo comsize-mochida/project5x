@@ -78,7 +78,7 @@
 				</td>
 			</tr>
 		</table>
-		<input type="button" onclick="location.href='list-servlet';" value="一覧に戻る">
+		<input type="button" onclick="location.href='task-list-servlet';" value="一覧に戻る">
 		<input type="submit" value="編集内容の確認に進む">
 	</form>
 	

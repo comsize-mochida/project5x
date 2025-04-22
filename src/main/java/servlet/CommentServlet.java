@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class CommentServlet extends HttpServlet {
 			
 			session.setAttribute("taskID",taskID );
 			session.setAttribute("taskName", taskName);
-			session.setAttribute("commentList", list);
+			request.setAttribute("commentList", list);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("comment.jsp");
 			rd.forward(request, response);
@@ -71,8 +72,34 @@ public class CommentServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		String taskName = (String)session.getAttribute("taskName");
+		int taskID = Integer.parseInt(request.getParameter("taskID"));
+		String userID = request.getParameter("userID");
+		String comment = request.getParameter("comment");
+		
+		CommentBean bean = new CommentBean();
+		bean.setTaskID(taskID);
+		bean.setUserID(userID);
+		bean.setComment(comment);
+		
+		CommentDAO dao = new CommentDAO();
+		try {
+			int count = dao.register(bean);
+			if(count == 0) {
+				RequestDispatcher rd = request.getRequestDispatcher("comment-failure.jsp");
+				rd.forward(request, response);
+			}else {
+				String encodedName = URLEncoder.encode(taskName, "UTF-8");
+				response.sendRedirect("comment-servlet?taskID=" + taskID + "&taskName=" + encodedName);
+			}
+			
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
