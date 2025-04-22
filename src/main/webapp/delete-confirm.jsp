@@ -62,7 +62,7 @@
 	
 	<br>
 	<form action="list.jsp" method="POST">
-		<input type="submit" value="一覧に戻る">
+		<input type="button" onclick="history.back()" value="一覧に戻る">
 	</form>
 
 	<!-- 一括削除フォーム -->
