@@ -18,25 +18,32 @@
 	<h1>コメント一覧</h1>
 	<h2>タスク名：<%= taskName %></h2>
 	
-	<table border="double">
-		<tr>
-			<th>No</th><th>投稿者</th><th>コメント内容</th><th>投稿日時</th>
-		</tr>
-	<% for(CommentBean bean : commentList){ %>
-		<tr>
-			<td><%= bean.getCommentID() %></td>
-			<td><%= bean.getUserName() %></td>
-			<td><%= bean.getComment() %></td>
-			<td><%= bean.getUpdateDatetime() %></td>
-		</tr>
-	<% } %>
-	</table>
+	<form action="comment-delete-servlet" method="POST">
+		<table border="double">
+			<tr>
+				<th>投稿者</th><th>コメント内容</th><th>投稿日時</th><th>削除</th>
+			</tr>
+		<% for(CommentBean bean : commentList){ %>
+			<tr>
+				<td><%= bean.getUserName() %></td>
+				<td><%= bean.getComment() %></td>
+				<td><%= bean.getUpdateDatetime() %></td>
+				<td>
+				<% if(bean.getUserName().equals(userName)){ %>
+				<input type="hidden" name="commentID" value="<%= bean.getCommentID()%>">
+				<input type="submit" value="削除">
+				<% } %>
+				</td>
+			</tr>
+		<% } %>
+		</table>
+	</form>
 	<br>
 	<h2>コメント追加</h2>
 	<form action="comment-servlet" method="POST">
 		<input type="hidden" name="taskID" value="<%= taskID %>">
 		<input type="hidden" name="userID" value="<%= userID %>">
-		<textarea name="comment" cols="50" rows="10"></textarea>
+		<textarea name="comment" cols="50" rows="10" required></textarea>
 		<br><input type="submit" value="投稿">
 	</form>
 	<br>
