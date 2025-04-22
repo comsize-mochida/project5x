@@ -66,6 +66,7 @@ public class Loginservlet extends HttpServlet {
 
 				// セッションスコープへの属性の設定
 				session.setAttribute("userName", userdao.login(userID, password).getUserName());
+				session.setAttribute("userID", userdao.login(userID, password).getUserID());
 			} else {
 				// 転送先の設定
 				url = "login-failure.jsp";
