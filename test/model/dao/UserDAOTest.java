@@ -1,5 +1,7 @@
 package model.dao;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +14,14 @@ class UserDAOTest {
 
 	@Test
 	void selectUser_成功() {
-		
+
 		UserDAO dao = new UserDAO();
 		List<UserBean> list = new ArrayList<>();
-		
+
 		try {
-			
+
 			list = dao.selectUser();
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -29,7 +31,10 @@ class UserDAOTest {
 			e.printStackTrace();
 
 		}
-		
+
+		//検証
+		assertNotNull(list);
+
 	}
 
 }

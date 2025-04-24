@@ -1,5 +1,7 @@
 package model.dao;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ class TaskDAOTest {
 
 		}
 
+		assertEquals(1, count);
+
 	}
 
 	@Test
@@ -70,27 +74,32 @@ class TaskDAOTest {
 
 		}
 
+		assertEquals(0, count);
+
 	}
 
 	@Test
 	void selectStatus_成功() {
-		
+
 		TaskDAO dao = new TaskDAO();
 		List<StatusBean> list = new ArrayList<>();
 
 		try {
-			
+
 			list = dao.selectStatus();
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-			
+
 		} catch (ClassNotFoundException e) {
-			
+
 			e.printStackTrace();
-			
+
 		}
+
+		//検証
+		assertNotNull(list);
 
 	}
 

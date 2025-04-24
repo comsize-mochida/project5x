@@ -1,5 +1,7 @@
 package model.dao;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +14,15 @@ class CommentDAOTest {
 
 	@Test
 	void selectAll_成功() {
-		
+
 		CommentDAO dao = new CommentDAO();
 		List<CommentBean> list = new ArrayList<>();
 		int taskID = 1;
-		
+
 		try {
-			
+
 			list = dao.selectAll(taskID);
-		
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -30,8 +32,10 @@ class CommentDAOTest {
 			e.printStackTrace();
 
 		}
-		
-		
+
+		//検証
+		assertNotNull(list);
+
 	}
 
 }
