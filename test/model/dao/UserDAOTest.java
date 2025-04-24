@@ -36,5 +36,39 @@ class UserDAOTest {
 		assertNotNull(list);
 
 	}
+	@Test
+	void login_成功() {
+		UserDAO dao = new UserDAO();
+		UserBean userBean = null;
+		String userID = "a-takahashi";
+		String password = "ai";
+		try {
+			userBean = dao.login(userID, password);
+		}catch(ClassNotFoundException | SQLException e){
+			e.printStackTrace();
+		}
+		assertEquals("高橋愛", userBean.getUserName());
+	}
+	@Test
+	void login_失敗() {
+		//		準備
+		UserDAO dao = new UserDAO();
+		UserBean userBean = null;
+		String 	userID = "tarou";
+		String password = "test";
+
+		//		実行
+		try {
+			userBean = dao.login(userID, password);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		//	検証
+		assertNull(userBean.getUserName());
+	}
+
+
 
 }
