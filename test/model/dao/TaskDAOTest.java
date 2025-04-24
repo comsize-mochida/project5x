@@ -1,6 +1,5 @@
 package model.dao;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLException;
@@ -16,6 +15,7 @@ import model.entity.TaskBean;
 
 class TaskDAOTest {
 
+	@Test
 	void register_成功() {
 
 		TaskDAO dao = new TaskDAO();
@@ -42,6 +42,8 @@ class TaskDAOTest {
 			e.printStackTrace();
 
 		}
+
+		assertEquals(1, count);
 
 	}
 
@@ -73,34 +75,35 @@ class TaskDAOTest {
 
 		}
 
+		assertEquals(0, count);
+
 	}
 
 	@Test
 	void selectStatus_成功() {
-		
+
 		TaskDAO dao = new TaskDAO();
 		List<StatusBean> list = new ArrayList<>();
 
 		try {
-			
+
 			list = dao.selectStatus();
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-			
+
 		} catch (ClassNotFoundException e) {
-			
+
 			e.printStackTrace();
-			
+
 		}
 
-		
-		//検証Assert
+		//検証
 		assertNotNull(list);
 
 	}
-	
+
 	@Test
 	void update_成功() {
 		//準備Arrange
@@ -114,20 +117,20 @@ class TaskDAOTest {
 		bean.setStatusCode("00");
 		bean.setMemo("サンプル");
 		bean.setTaskID(1);
-		
+
 		//実行Act
 		try {
 			count = dao.update(bean);
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}catch(ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		//検証Assert
-		assertEquals(1,count);
+		assertEquals(1, count);
 	}
-	
+
 	@Test
 	void update_失敗() {
 		//準備Arrange
@@ -141,57 +144,57 @@ class TaskDAOTest {
 		bean.setStatusCode("00");
 		bean.setMemo("サンプル");
 		bean.setTaskID(1);
-		
+
 		//実行Act
 		try {
 			count = dao.update(bean);
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}catch(ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		//検証Assert
-		assertEquals(0,count);
+		assertEquals(0, count);
 	}
-	
+
 	@Test
 	void selectCategory_成功() {
 		//準備Arrange
 		TaskDAO dao = new TaskDAO();
 		List<CategoryBean> list = new ArrayList<>();
-		
+
 		//実行Act
-		try{
+		try {
 			list = dao.selectCategory();
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}catch(ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		//検証Assert
 		assertNotNull(list);
 	}
-	
+
 	@Test
 	void selectTask_成功() {
 		//準備Arrange
 		TaskDAO dao = new TaskDAO();
 		TaskBean bean = null;
 		int taskID = 1;
-		
+
 		//実行Act
 		try {
 			bean = dao.selectTask(taskID);
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}catch(ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		//検証Assert
 		assertNotNull(bean);
 	}
-	
+
 }
