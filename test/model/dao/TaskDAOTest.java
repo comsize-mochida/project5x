@@ -196,5 +196,47 @@ class TaskDAOTest {
 		//検証Assert
 		assertNotNull(bean);
 	}
+	
+	@Test
+	void delete_成功() {
+		//準備Arrange
+		TaskDAO dao = new TaskDAO();
+		int count = 0;
+		int taskID = 16;
+		
+		//実行Act
+		try {
+			count = dao.delete(taskID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		//検証Assert
+		assertEquals(1, count);
+		
+	}
 
+	@Test
+	void delete_失敗() {
+		//準備Arrange
+		TaskDAO dao = new TaskDAO();
+		int count = 0;
+		int taskID = 0;
+		
+		//実行Act
+		try {
+			count = dao.delete(taskID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		//検証Assert
+		assertEquals(0, count);
+		
+	}
+	
 }
