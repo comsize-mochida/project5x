@@ -1,8 +1,11 @@
 package model.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import java.sql.SQLException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 
 import org.junit.jupiter.api.Test;
 
@@ -101,4 +104,29 @@ class CommentDAOTest {
 		assertEquals(0, count);
 		
 	}
+  
+	@Test
+	void selectAll_成功() {
+		
+		CommentDAO dao = new CommentDAO();
+		List<CommentBean> list = new ArrayList<>();
+		int taskID = 1;
+		
+		try {
+			
+			list = dao.selectAll(taskID);
+		
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		
+		
+	}
+
 }
