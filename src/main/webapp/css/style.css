@@ -1,0 +1,208 @@
+@charset "UTF-8";
+
+/*=========全体に対して=========*/
+body,
+p,
+h1,
+h2,
+h3,
+ul,
+figure {
+	margin: 0px;
+	padding: 0px;
+}
+
+img {
+	vertical-align: top;
+}
+
+body {
+	font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, "sans-serif";
+	line-height: 1.8;
+	background-color: #ced7dc;
+	color: #3e3a3a;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.inner {
+	width: 1000px;
+	margin: 0px auto;
+	padding: 0px 20px;
+	text-align: center;
+}
+
+/*=========ヘッダー=========*/
+header {
+	background-color: #eff3f6;
+	opacity: 0.9;
+	background-size: cover;
+	padding-top: 30px;
+	width: 100%;
+}
+
+
+header .inner h1 {
+	margin-top: 30px;
+	margin-bottom: 60px;
+	padding-bottom: 20px;
+}
+
+/*ログインユーザー名*/
+.login-user {
+	position: absolute;
+	/* 絶対位置指定 */
+	top: 120px;
+	/* 上から20px */
+	right: 30px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	opacity: 0.7;
+}
+
+h1 {
+	font-size: 40px;
+}
+
+/*=========メイン画面=========*/
+h2 {
+	font-size: 25px;
+	margin-bottom: 20px;
+}
+
+.comment-h3 {
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+.login-text {
+	font-style: bold;
+	font-size: 16px;
+	text-align: right;
+	width: 300px;
+	margin-top: 40px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 30px;
+	background-position: 100px 0%;
+}
+
+/* 両ボタンを横並びに */
+.login-btn {
+	display: flex;
+	gap: 12px;
+	/*ボタン間の余白*/
+}
+
+/* 共通ボタンのスタイル */
+.btn {
+	padding: 8px 16px;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	border: none;
+	border-radius: 4px;
+	font-size: 1rem;
+	cursor: pointer;
+	background-color: #e6e5ef;
+	border-radius: 10px;
+	transition: all 0.3s;
+}
+
+.btn:hover {
+	background-color: #c8c6dc;
+}
+
+.logout-btn {
+	margin-top: 100px;
+}
+
+/*テーブルをさらに綺麗にするためのクラス*/
+.form-wrap {
+	display: flex;
+	justify-content: center;
+}
+
+/*登録テーブル*/
+.form-table {
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+
+.form-table th {
+	padding: 10px 16px;
+	border: 1px solid #999;
+	white-space: nowrap;
+	/* ← これがポイント！！改行しない！ */
+}
+
+.form-table td {
+	padding: 10px 16px;
+	border: 1px solid #999;
+	text-align: left;
+	width: 300px;
+	max-width: 40em;
+	/* 40文字くらいの幅。emは文字サイズに合わせた単位！ */
+	word-wrap: break-word;
+	/* 単語の途中でも折り返しOK */
+	white-space: normal;
+	/* 折り返し可能にする */
+	overflow-wrap: break-word;
+	/* 長い単語も強制的に折り返し */
+	text-overflow: ellipsis;
+	/* はみ出したら「...」にする */
+}
+
+/*========pagetop=========*/
+
+.pagetop {
+	position: fixed; /*画面をスクロールしても右下に常に現れる*/
+	bottom: -10px;
+	right: -100px;
+	display: flex;
+	justify-content: end;
+	opacity: 0.8;
+}
+
+.pagetop:hover {
+	opacity: 1;
+}
+
+.pagetop a {
+	background-color: #7fa3b8;
+	color: #fff;
+	padding: 35px;
+	font-size: 20px;
+	font-weight: bold;
+	margin-right: 100px;
+	border-radius: 40px;
+	text-decoration: none;
+}
+
+/*========フッター=========*/
+/*footer {
+	background-color: #b3c9d6;
+	width: 100%;
+	background-size: cover;
+	text-align: center;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin-top: 50px;
+	padding-top: 50px;
+}
+
+footer p {
+	padding-top: 30px;
+	padding-bottom: 10px;
+	text-align: center;
+
+}*/
