@@ -239,4 +239,21 @@ class TaskDAOTest {
 		
 	}
 	
+	@Test
+	void selectAll_成功() {
+		TaskDAO dao = new TaskDAO();
+		List<TaskBean> list = new ArrayList<>();
+		try {
+			list = dao.selectAll();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		//検証Assert
+		assertNotNull(list);
+		
+	}
+	
 }
